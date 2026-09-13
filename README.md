@@ -2,7 +2,8 @@
 
 Code used in my Bachelor's Thesis (TFG) to characterize and model the degradation of a
 lithium-ion battery through cycling, electrochemical impedance spectroscopy (EIS) and
-equivalent-circuit fitting.
+equivalent-circuit fitting. Creation of a Simulink Model that includes the variation of 
+baterry impedances with cycling and its impact on degradation prediction.
 
 ## Data pipeline
 
