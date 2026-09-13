@@ -20,14 +20,12 @@ flowchart TD
     E["BODE100 / Keysight E4990A\n(EIS measurement)"] -->|".cir / raw EIS files"| F["Circuit Parameters from BODE100\n(READ_BODE100_PARAMETERS.py)"]
     F -->|"R0,R1,C1,R2,C2,L0 per cycle\n(Bode100's own fit)"| G["MATLAB Analysis /\n01... / 02. Impedance evolution analysis"]
     E -->|"raw EIS files\n(fitted directly in MATLAB)"| G
-    G --> H["MATLAB Analysis /\n01... / 03. Impedance evolution\nmathematical fitting"]
-    G --> I["MATLAB Analysis /\n01... / 06. Z vs SOC analysis"]
+    G --> M["MATLAB Analysis / 01... /\n03-06\n(fitting, Nyquist & OCV-SOC plots)"]
     G --> D
 
-    D --> J["MATLAB Analysis /\n02. MATLAB Models\n(Simulink battery models)"]
-    H --> J
-    I --> J
-    J --> K["Results"]
+    M --> J["MATLAB Analysis /\n02. MATLAB Models\n(Simulink battery models)"]
+    J --> D
+    D --> K["Results"]
 ```
 
 In short: the Arduino boards cycle the battery and stream data over serial (pausing
@@ -37,9 +35,10 @@ parallel, the impedance analyzer (Bode 100 / Keysight E4990A) measures EIS per c
 equivalent-circuit parameters (R0, L0, R1‑C1, R2‑C2) come from two sources that both land in
 `02. Impedance evolution analysis`: the Bode 100's own fit (parsed from its raw export by
 the Python script) and MATLAB's own least-squares fit run directly on the raw EIS data. From
-there, the parameter trends are further analyzed (mathematical fitting, Z vs SOC), and —
-together with the capacity evolution — feed the Simulink battery model, the capacity-loss
-optimization, and the final results.
+there, the parameter trends are further analyzed (folders 03-06: mathematical fitting,
+Nyquist plotting, OCV-SOC and Z vs SOC), which feed into the Simulink battery model. That
+model, together with the capacity evolution, feeds the cycling simulation and capacity-loss
+optimization stage, producing the final results.
 
 ## Folder structure
 
